@@ -1,0 +1,119 @@
+//Sassy_Don30
+
+#include<GL\glut.h>
+#include<iostream>
+#include<math.h>
+using namespace std;
+
+GLfloat xRotation, yRotation, zRotation;
+
+void Init(void){
+    glClearColor(0, 0, 0, 0); // RGB- alpha set kiya black ko
+}
+
+void DrawCube(void){
+    //view mode select kiya
+    glMatrixMode(GL_MODELVIEW);
+
+    // clear the drawing buffer.
+    glClear(GL_COLOR_BUFFER_BIT);
+    glLoadIdentity();
+
+    // move and rotate the cube using inbuilt function
+    glTranslatef(0.0, 0.0, -10.5);
+    glRotatef(xRotation, 1.0, 0.0, 0.0);
+
+    // rotation about Y axis
+    glRotatef(yRotation, 0.0, 1.0, 0.0);
+
+    // rotation about Z axis
+    glRotatef(zRotation, 0.0, 0.0, 1.0);
+
+    //yaha pe cube ko actually set karenge
+    glBegin(GL_QUADS);
+    //color wala toh color dega uska seedha
+    glColor3f(0.0f, 1.0f, 0.0f);
+    //vertex matlab uske actual coordinates
+
+    glVertex3f(1.0f, 1.0f, -1.0f);
+    glVertex3f(-1.0f, 1.0f, -1.0f);
+    glVertex3f(-1.0f, 1.0f, 1.0f);
+    glVertex3f(1.0f, 1.0f, 1.0f);
+
+    glColor3f(1.0f, 0.5f, 0.0f);
+    glVertex3f(1.0f, -1.0f, 1.0f);
+    glVertex3f(-1.0f, -1.0f, 1.0f);
+    glVertex3f(-1.0f, -1.0f, -1.0f);
+    glVertex3f(1.0f, -1.0f, -1.0f);
+
+    glColor3f(1.0f, 0.0f, 0.0f);
+    glVertex3f(1.0f, 1.0f, 1.0f);
+    glVertex3f(-1.0f, 1.0f, 1.0f);
+    glVertex3f(-1.0f, -1.0f, 1.0f);
+    glVertex3f(1.0f, -1.0f, 1.0f);
+
+    glColor3f(1.0f, 1.0f, 0.0f);
+    glVertex3f(1.0f, -1.0f, -1.0f);
+    glVertex3f(-1.0f, -1.0f, -1.0f);
+    glVertex3f(-1.0f, 1.0f, -1.0f);
+    glVertex3f(1.0f, 1.0f, -1.0f);
+
+    glColor3f(0.0f, 0.0f, 1.0f);
+    glVertex3f(-1.0f, 1.0f, 1.0f);
+    glVertex3f(-1.0f, 1.0f, -1.0f);
+    glVertex3f(-1.0f, -1.0f, -1.0f);
+    glVertex3f(-1.0f, -1.0f, 1.0f);
+
+    glColor3f(1.0f, 0.0f, 1.0f);
+    glVertex3f(1.0f, 1.0f, -1.0f);
+    glVertex3f(1.0f, 1.0f, 1.0f);
+    glVertex3f(1.0f, -1.0f, 1.0f);
+    glVertex3f(1.0f, -1.0f, -1.0f);
+    glEnd();
+
+    //end me sab kuch flush kar diya
+    glFlush();
+}
+
+// uska rotation yaha change hoga haar second
+// taaki jo actually humne draw cube me kiya voh sahi se ho 
+void Animation(void){
+    yRotation += 0.01; //haar baar increase hoga itne se x aur y
+    xRotation += 0.02;
+    DrawCube(); // lagatar draw honge cubes because
+    //animation is bohot saari images moving jaldi jaldi 
+}
+
+
+void Reshape(int x, int y){
+    if (y == 0 || x == 0)
+        return;
+
+    glMatrixMode(GL_PROJECTION);
+    glLoadIdentity();
+
+    //kaise dikhega voh hai ye
+    gluPerspective(40.0, (GLdouble)x / (GLdouble)y, 0.5, 20.0);
+    glMatrixMode(GL_MODELVIEW);
+    glViewport(0, 0, x, y);
+}
+
+
+int main(int argc, char** argv){
+
+    glutInit(&argc, argv);
+    // display mode select kiya aur window position lagai
+    glutInitDisplayMode(GLUT_SINGLE | GLUT_RGB);
+    glutInitWindowPosition(200, 200);
+    //kuch nahi dala isleye argv[0] kar rahe
+    glutCreateWindow("3D cube");
+
+    // yaha pe sab function call kiye
+    Init();
+    glutDisplayFunc(DrawCube); // cube draw hoga lagatar
+    glutReshapeFunc(Reshape); //uska shape kaisa rahega voh
+    glutIdleFunc(Animation); // lagatar frames jo aayenge voh
+    glutMainLoop();
+
+    return 0;
+}
