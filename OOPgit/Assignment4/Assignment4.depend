@@ -1,0 +1,9 @@
+# depslib dependency file v1.0
+1602655069 source:g:\code\c++\codeblocks\assignment4\main.cpp
+	<iostream>
+	<fstream>
+
+1602655069 source:c:\users\sameer\desktop\oop\assignment4\main.cpp
+	<iostream>
+	<fstream>
+

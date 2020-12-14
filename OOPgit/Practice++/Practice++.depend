@@ -1,0 +1,8 @@
+# depslib dependency file v1.0
+1602667496 source:g:\code\c++\codeblocks\practice++\main.cpp
+	<fstream>
+	<iostream>
+
+1607776751 source:c:\users\sameer\desktop\oop\practice++\main.cpp
+	<bits/stdc++.h>
+
